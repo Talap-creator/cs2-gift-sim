@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CS2 Case Opening Simulator | Sealed Genesis Terminal</title>
+  <meta name="description" content="Simulate opening the Sealed Genesis Terminal in CS2 with real drop rates." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <nav class="navbar">
+      <div class="nav-inner">
+        <a class="logo" href="#">
+          <div class="logo-box">SGT</div>
+          <span class="logo-text">CASE<span class="accent">CALCULATOR</span></span>
+        </a>
+        <div class="nav-links">
+          <a href="#" class="nav-link">Calculator</a>
+          <a href="#" class="nav-link active">Simulator</a>
+          <a href="#" class="nav-link">Trade Up</a>
+        </div>
+      </div>
+    </nav>
+
+    <main class="main">
+      <div class="title-block">
+        <h1>Case Opening <span class="accent">Simulator</span></h1>
+        <p class="subtitle">Real drop rates. No money required.</p>
+      </div>
+
+      <div class="case-banner">
+        <div class="case-banner-left">
+          <img id="case-icon" alt="Sealed Genesis Terminal" />
+          <div class="case-name-wrap">
+            <a href="#" class="case-name">Sealed Genesis Terminal</a>
+          </div>
+        </div>
+        <button class="btn-ghost">Change</button>
+      </div>
+
+      <div class="tabs">
+        <button class="tab active"><span>Classic</span></button>
+        <button class="tab"><span>Bulk</span></button>
+      </div>
+
+      <div class="layout">
+        <div class="terminal-card">
+          <aside class="chat">
+            <div class="chat-header">Chat — tevxn</div>
+            <div class="chat-body" id="chat-body">
+              <p class="chat-sys">Sealed Genesis Terminal Arms Deal Offers.</p>
+              <p class="chat-sys">tevxn Connected</p>
+            </div>
+          </aside>
+
+          <section class="offer">
+            <div class="offer-header">Current Offer</div>
+            <div class="offer-stage" id="offer-stage">
+              <div class="offer-inner">
+                <h3 class="offer-name" id="offer-name">—</h3>
+                <span class="rarity-badge" id="offer-rarity">—</span>
+                <img class="offer-image" id="offer-image" alt="" />
+                <p class="offer-wear" id="offer-wear">—</p>
+                <div class="float-bar-wrap">
+                  <div class="float-bar">
+                    <div style="width:7%;background:#22c55e"></div>
+                    <div style="width:8%;background:#84cc16"></div>
+                    <div style="width:23%;background:#eab308"></div>
+                    <div style="width:7%;background:#f97316"></div>
+                    <div style="width:55%;background:#ef4444"></div>
+                    <div class="float-marker" id="float-marker" style="left:0%"></div>
+                  </div>
+                  <p class="float-value" id="float-value">0.0000000000</p>
+                </div>
+              </div>
+            </div>
+            <div class="offer-footer">
+              <div class="offer-meta">
+                <span id="offer-index">1st Offer</span>
+                <span>Offer limit: Unlimited</span>
+              </div>
+              <div class="offer-actions">
+                <button class="hold-btn accept" id="btn-accept">
+                  <span class="fill"></span>
+                  <span class="label" id="btn-accept-label">Accept Offer 0,00 $</span>
+                </button>
+                <button class="hold-btn decline" id="btn-decline">
+                  <span class="fill"></span>
+                  <span class="label">Decline Offer</span>
+                </button>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <aside class="sidebar">
+          <div class="stats-card">
+            <div class="stats-grid">
+              <span class="muted">Profit:</span>
+              <span id="stat-profit" class="tabular">0,00 $</span>
+              <span class="muted">Opened:</span>
+              <span id="stat-opened" class="tabular">0</span>
+              <span class="muted">Cost/Spin:</span>
+              <span id="stat-cost" class="tabular muted">0,36 $</span>
+            </div>
+            <button id="btn-reset" class="reset-btn">Reset</button>
+            <div class="divider"></div>
+            <p class="log-title">Unbox Log</p>
+            <div class="log" id="unbox-log"></div>
+          </div>
+        </aside>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <p>© 2026 — Not affiliated with Valve Corporation. CS2 and Steam are trademarks of Valve.</p>
+    </footer>
+  </div>
+
+  <div class="victory-overlay" id="victory" hidden>
+    <div class="victory-box">
+      <p class="victory-kicker">🎉 HAPPY BIRTHDAY 🎉</p>
+      <h2 class="victory-title">You unboxed</h2>
+      <img class="victory-image" id="victory-image" alt="" />
+      <h3 class="victory-skin" id="victory-skin">—</h3>
+      <span class="rarity-badge" id="victory-rarity">—</span>
+      <p class="victory-wear" id="victory-wear">—</p>
+      <p class="victory-price" id="victory-price">—</p>
+      <p class="victory-note">This one's real. Check your inventory. 💚</p>
+      <button class="btn-ghost" id="btn-close-victory">Close</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
