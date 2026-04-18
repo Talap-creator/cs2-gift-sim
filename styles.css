@@ -487,9 +487,51 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .victory-price { font-size: 18px; color: var(--accent); font-weight: 700; font-variant-numeric: tabular-nums; }
 .victory-note { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
 
+/* Typing dots animation */
+.typing-dots {
+  display: flex !important;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 14px !important;
+  min-width: 48px;
+}
+.typing-dots span {
+  display: inline-block;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--text-tertiary);
+  animation: dot-bounce 1.2s ease-in-out infinite;
+}
+.typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+.typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes dot-bounce {
+  0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+  40% { transform: translateY(-6px); opacity: 1; }
+}
+
+/* Disabled state */
+.hold-btn:disabled { opacity: 0.35; cursor: not-allowed; pointer-events: none; }
+
+/* Mobile */
 @media (max-width: 640px) {
-  .title-block h1 { font-size: 26px; }
+  .title-block h1 { font-size: 22px; }
+  .subtitle { font-size: 12px; }
   .nav-links { display: none; }
-  .main { padding: 12px; }
-  .offer-image { width: 220px; height: 160px; }
+  .main { padding: 8px 10px 32px; }
+  .case-banner { padding: 10px 12px; }
+  .case-banner-left img { width: 32px; height: 32px; }
+  .case-name { font-size: 12px; }
+  .terminal-card { min-height: 0; border-radius: 8px; }
+  .chat { max-height: 200px; }
+  .offer-image { width: 200px; height: 150px; }
+  .offer-name { font-size: 15px; }
+  .offer-stage { padding: 14px 10px; min-height: 280px; }
+  .offer-actions { gap: 6px; }
+  .hold-btn { padding: 10px 12px; font-size: 13px; }
+  .victory-box { padding: 24px 16px; }
+  .victory-image { width: 240px; height: 170px; }
+  .victory-skin { font-size: 16px; }
+  .stats-card { padding: 12px; }
+  .sidebar { margin-top: 0; }
+  .layout { gap: 10px; }
 }

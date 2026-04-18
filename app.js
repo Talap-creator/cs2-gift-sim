@@ -9,7 +9,7 @@ const GIFT_SKIN = {
   price: 126.50,
   rarity: "covert",
   rarityLabel: "Covert",
-  image: "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwlcK3wiNQu6WReLFrJvWBMWSF0vp5vd5kSi26gBBp42WBmYqgd3_DbgImDpR3TOFYskTrmoexZO",
+  image: "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwlcK3wiNQu6WReLFrJvWBMWSF0vp5vd5kSi26gBBp42WBmYqgd3_DbgImDpR3TOFYskTrmoexZOrh5wHYit9CzC-tii0d7DErvbjcPVCOHQ",
   dealerMsg: "Alright. Last one I'm pulling out tonight. Consider it a special occasion.",
 };
 
@@ -28,7 +28,7 @@ const JUNK_OFFERS = [
     price: 0.12,
     rarity: "milspec",
     rarityLabel: "Mil-Spec",
-    image: "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8n5G3wi9a6KWRa61_I_yWMWSf0f5zot5hSiiljFN35Gndntz8eXqQPVR0X5N3ReEIuhHtlofgZO",
+    image: "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8n5G3wi9a6KWRa61_I_yWMWSf0f5zot5hSiiljFN35Gndntz8eXqQPVR0X5N3ReEIuhHtlofgZO205wzeioxAmX78i3sb8G81tFghpsmu",
     dealerMsg: "Mistakes happen. I'm just trying to help out a friend so they don't lose their supply sergeant post.",
   },
   {
@@ -39,7 +39,7 @@ const JUNK_OFFERS = [
     price: 0.19,
     rarity: "milspec",
     rarityLabel: "Mil-Spec",
-    image: "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8js_f8DIC0OSnZr1hH_2WCm6FzKBwsrVrSi_qxhkhtTjUw9r8dH-ealMkDpNxEORZu0G-koDmZO",
+    image: "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8js_f8DIC0OSnZr1hH_2WCm6FzKBwsrVrSi_qxhkhtTjUw9r8dH-ealMkDpNxEORZu0G-koDmZOLitQWMlcsbmgk3EYUu",
     dealerMsg: "Making me go all the way in the back for the premium shelf stuff, huh? Alright, you got it.",
   },
   {
@@ -50,7 +50,7 @@ const JUNK_OFFERS = [
     price: 0.11,
     rarity: "milspec",
     rarityLabel: "Mil-Spec",
-    image: "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8js_f8DIC0OSnZr1hH_2WCm6FzKBwsrVrSi_qxhkhtTjUw9r8dH-ealMkDpNxEORZu0G-koDmZO",
+    image: "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8js_f8DIC0OSnZr1hH_2WCm6FzKBwsrVrSi_qxhkhtTjUw9r8dH-ealMkDpNxEORZu0G-koDmZOLitQWMlcsbmgk3EYUu",
     dealerMsg: "You're gonna regret passing on that later. Not a problem.",
   },
 ];
@@ -145,15 +145,41 @@ function showOffer(idx) {
 // =============================================
 // Chat helpers
 // =============================================
-function addDealerMsg(text) {
+function addDealerMsg(text, onDone) {
+  // dots while typing
   const el = document.createElement("div");
   el.className = "dealer-msg";
   el.innerHTML = `
     <div class="dealer-avatar">M</div>
-    <div class="dealer-bubble">${text}</div>
+    <div class="dealer-bubble typing-dots"><span></span><span></span><span></span></div>
   `;
   chatBody.appendChild(el);
   scrollChat();
+
+  // lock buttons during typing
+  btnAccept.disabled = true;
+  btnDecline.disabled = true;
+
+  const bubble = el.querySelector(".dealer-bubble");
+  const delay = Math.min(1800, 600 + text.length * 18);
+
+  setTimeout(() => {
+    bubble.classList.remove("typing-dots");
+    bubble.innerHTML = "";
+    // typewriter
+    let i = 0;
+    const interval = setInterval(() => {
+      bubble.textContent += text[i];
+      i++;
+      if (i >= text.length) {
+        clearInterval(interval);
+        btnAccept.disabled = false;
+        btnDecline.disabled = false;
+        if (onDone) onDone();
+      }
+      scrollChat();
+    }, 18);
+  }, delay);
 }
 
 function addOfferCard(offer, num, declined) {
@@ -265,7 +291,6 @@ setupHoldBtn(btnAccept, () => {
 setupHoldBtn(btnDecline, () => {
   const offer = OFFERS[offerIndex];
 
-  // Count spin cost
   totalSpent += COST_PER_SPIN;
   opened++;
   addOfferCard(offer, offerIndex + 1, true);
@@ -276,13 +301,10 @@ setupHoldBtn(btnDecline, () => {
   if (nextIdx < OFFERS.length) {
     offerIndex = nextIdx;
     const nextOffer = OFFERS[nextIdx];
-    addDealerMsg(nextOffer.dealerMsg);
-    showOffer(nextIdx);
+    addDealerMsg(nextOffer.dealerMsg, () => showOffer(nextIdx));
   } else {
-    // Wrap around if declined all (shouldn't happen in normal flow)
     offerIndex = OFFERS.length - 1;
-    addDealerMsg("That was the last one I've got. Take it or leave it.");
-    showOffer(OFFERS.length - 1);
+    addDealerMsg("That was the last one I've got. Take it or leave it.", () => showOffer(OFFERS.length - 1));
   }
 });
 
@@ -382,7 +404,8 @@ function launchConfetti(big) {
 // =============================================
 // Первый оффер: показываем сообщение дилера
 // =============================================
+btnAccept.disabled = true;
+btnDecline.disabled = true;
 setTimeout(() => {
-  addDealerMsg(OFFERS[0].dealerMsg);
-  showOffer(0);
+  addDealerMsg(OFFERS[0].dealerMsg, () => showOffer(0));
 }, 300);
