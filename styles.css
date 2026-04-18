@@ -512,6 +512,21 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 /* Disabled state */
 .hold-btn:disabled { opacity: 0.35; cursor: not-allowed; pointer-events: none; }
 
+/* Gift offer — зелёная accept кнопка с пульсацией */
+.hold-btn.accept.gift {
+  border-color: var(--accent);
+  background: rgba(34, 197, 94, 0.15);
+  color: var(--accent);
+  box-shadow: 0 0 18px rgba(34, 197, 94, 0.35);
+  animation: gift-pulse 1.6s ease-in-out infinite;
+}
+.hold-btn.accept.gift .fill { background: var(--accent); }
+.hold-btn.accept.gift .label { color: var(--accent); }
+@keyframes gift-pulse {
+  0%, 100% { box-shadow: 0 0 14px rgba(34,197,94,0.3); }
+  50% { box-shadow: 0 0 32px rgba(34,197,94,0.7); }
+}
+
 /* Mobile */
 @media (max-width: 640px) {
   .title-block h1 { font-size: 22px; }

@@ -1,3 +1,5 @@
+import { playOfferAppear, playDecline, playHoldStart, playAccept, playGiftReveal, playTypingClick } from "./sounds.js";
+
 // =============================================
 // НАСТРОЙКИ: Меняй здесь под свой подарок
 // =============================================
@@ -116,6 +118,7 @@ function floatToWearPct(f) {
 }
 
 function showOffer(idx) {
+  playOfferAppear();
   const offer = OFFERS[idx];
   offerNameEl.textContent = offer.name;
   offerRarityEl.textContent = offer.rarityLabel;
@@ -128,18 +131,8 @@ function showOffer(idx) {
   offerIndexEl.textContent = ordinal(idx + 1) + " Offer";
   btnAcceptLabel.textContent = "Accept Offer " + offer.price.toFixed(2).replace(".", ",") + " $";
 
-  // Highlight if gift
-  if (idx === OFFERS.length - 1) {
-    btnAccept.style.background = "rgba(235,75,75,0.15)";
-    btnAccept.style.borderColor = "#eb4b4b";
-    btnAccept.style.color = "#ef6a6a";
-    btnAccept.querySelector(".fill").style.background = "#eb4b4b";
-  } else {
-    btnAccept.style.background = "";
-    btnAccept.style.borderColor = "";
-    btnAccept.style.color = "";
-    btnAccept.querySelector(".fill").style.background = "";
-  }
+  // Gift offer — зелёная кнопка accept
+  btnAccept.classList.toggle("gift", idx === OFFERS.length - 1);
 }
 
 // =============================================
@@ -170,6 +163,7 @@ function addDealerMsg(text, onDone) {
     let i = 0;
     const interval = setInterval(() => {
       bubble.textContent += text[i];
+      if (i % 3 === 0) playTypingClick();
       i++;
       if (i >= text.length) {
         clearInterval(interval);
@@ -243,6 +237,7 @@ function setupHoldBtn(btn, onConfirm) {
 
   function start(e) {
     e.preventDefault();
+    playHoldStart(btn.classList.contains("accept"));
     btn.classList.add("filling");
     timer = setTimeout(() => {
       btn.classList.add("filled");
@@ -271,6 +266,7 @@ function setupHoldBtn(btn, onConfirm) {
 setupHoldBtn(btnAccept, () => {
   const offer = OFFERS[offerIndex];
   const isGift = offerIndex === OFFERS.length - 1;
+  isGift ? playGiftReveal() : playAccept();
 
   // Count spin cost
   totalSpent += COST_PER_SPIN;
@@ -289,6 +285,7 @@ setupHoldBtn(btnAccept, () => {
 });
 
 setupHoldBtn(btnDecline, () => {
+  playDecline();
   const offer = OFFERS[offerIndex];
 
   totalSpent += COST_PER_SPIN;
